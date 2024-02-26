@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">AndroidProjectCollection</string>
+    <string name="btnName">LAYOUT EXERCISE</string>
+    <string name="btnName1">LIKE</string>
+    <string name="btnName2">SHARE</string>
+    <string name="com">Comment</string>
+    <string name="user1"> @deo </string>
+    <string name="user2"> @jeth </string>
+    <string name="user3"> @zak </string>
+    <string name="user4"> @wewe </string>
+    <string name="user5"> @derik </string>
+    <string name="user6"> @zed.avi </string>
+    <string name="user7"> @skyflakes02 </string>
+    <string name="user8"> @urm0m </string>
+    <string name="btnOpen"> Button Exercise </string>
+    <string name="btnToast"> Toast </string>
+    <string name="btnLayout"> Disappear </string>
+    <string name="btnReturn"> Close </string>
+    <string name="btnCalc"> Calculator Exercise </string>
+    <string name="btnColor"> Change BG Color </string>
+    <string name="btnColorbg"> Change Color </string>
+</resources>
