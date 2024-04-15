@@ -1,281 +1,129 @@
 package com.example.androidprojectcollection;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.DecimalFormat;
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class MainActivity3Calc extends AppCompatActivity {
+    ArrayList<Button> numButtons = new ArrayList<>();
+    ArrayList<Button> opButtons = new ArrayList<>();
+    Calculator calculator = new Calculator();
+    boolean isDecimal = false;
 
-    Button btn1,
-            btn2,
-            btn3,
-            btn4,
-            btn5,
-            btn6,
-            btn7,
-            btn8,
-            btn9,
-            btn0,
-            AC,
-            btnEq,
-            btnAd,
-            btnSub,
-            btnDiv,
-            btnMult,
-            btnPoi,
-            btnPerc,
-            btnNeg;
-    TextView display,
-            eqView;
-    Boolean Nums = false;
-
-
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        Calculator c = new Calculator();
-        btn0 = (Button) findViewById(R.id.btnnum0);
-        btn1 = (Button) findViewById(R.id.btnnum1);
-        btn2 = (Button) findViewById(R.id.btnnum2);
-        btn3 = (Button) findViewById(R.id.btnnum3);
-        btn4 = (Button) findViewById(R.id.btnnum4);
-        btn5 = (Button) findViewById(R.id.btnnum5);
-        btn6 = (Button) findViewById(R.id.btnnum6);
-        btn7 = (Button) findViewById(R.id.btnnum7);
-        btn8 = (Button) findViewById(R.id.btnnum8);
-        btn9 = (Button) findViewById(R.id.btnnum9);
+        calculator();
+    }
 
-        btnPoi = (Button) findViewById(R.id.button86);
-        AC = (Button) findViewById(R.id.button93);
-        btnAd = (Button) findViewById(R.id.button83);
-        btnSub = (Button) findViewById(R.id.button80);
-        btnMult = (Button) findViewById(R.id.button92);
-        btnDiv = (Button) findViewById(R.id.button77);
-        btnEq = (Button) findViewById(R.id.button87);
+    public void calculator() {
 
-        eqView = (TextView) findViewById(R.id.equationview);
-        display= (TextView) findViewById(R.id.textView);
+        Button ACbtn = (Button) findViewById(R.id.btnAC);
+        Button Eqbtn = (Button) findViewById(R.id.btnEquals);
+        Button Decbtn = (Button) findViewById(R.id.btnDec);
+        TextView stringRes = (TextView) findViewById(R.id.Result);
+        TextView stringRev = (TextView) findViewById(R.id.Rev);
+        numButtons.add((Button) findViewById(R.id.btnnum0));
+        numButtons.add((Button) findViewById(R.id.btnnum1));
+        numButtons.add((Button) findViewById(R.id.btnnum2));
+        numButtons.add((Button) findViewById(R.id.btnnum3));
+        numButtons.add((Button) findViewById(R.id.btnnum4));
+        numButtons.add((Button) findViewById(R.id.btnnum5));
+        numButtons.add((Button) findViewById(R.id.btnnum6));
+        numButtons.add((Button) findViewById(R.id.btnnum7));
+        numButtons.add((Button) findViewById(R.id.btnnum8));
+        numButtons.add((Button) findViewById(R.id.btnnum9));
+        opButtons.add((Button) findViewById(R.id.btnAdd));
+        opButtons.add((Button) findViewById(R.id.btnSub));
+        opButtons.add((Button) findViewById(R.id.btnMult));
+        opButtons.add((Button) findViewById(R.id.btnDiv));
 
-        MainActivity3Calc m = this;
 
-        /*Buttons */
-        btn0.setOnClickListener(new View.OnClickListener()   {
-            @Override
-            public void onClick(View view) {
-                if (!display.getText().toString().equals("0")) {
-                    display.append("0");
+        for (Button button : numButtons) {
+            button.setOnClickListener(v -> {
+                String buttonText = button.getText().toString();
+                stringRev.append(buttonText);
+                updateResult( false);
+            });
+        }
+
+        for (Button button : opButtons) {
+            button.setOnClickListener(v -> {
+                isDecimal = false;
+                String buttonText = button.getText().toString();
+                String expression = stringRev.getText().toString();
+
+                if (!expression.isEmpty() && isOperator(expression.charAt(expression.length() - 1))) {
+                    stringRev.setText(expression.substring(0, expression.length() - 1) + buttonText);
+                } else {
+                    stringRev.append(buttonText);
                 }
-                Nums = true;
-                c.updateResult(m);
+            });
+        }
+        Eqbtn.setOnClickListener(v -> {
+            updateResult(true);
+            String expression = stringRev.getText().toString();
+            isDecimal = false;
+
+            try {
+                float result = calculator.calculate(expression, true);
+                stringRes.setText(formatResult(result));
+            } catch (Exception e) {
+                stringRes.setText(e.getMessage());
             }
         });
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eqView.append("1");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("2");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("3");
-
-                Nums = true;
-                c.updateResult(m);
-            }
+        ACbtn.setOnClickListener(v -> {
+            isDecimal = false;
+            updateResult(false);
+            stringRev.setText("");
+            stringRes.setText("0");
         });
 
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("4");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("5");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("6");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("7");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("8");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-        btn9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.append("9");
-
-                Nums = true;
-                c.updateResult(m);
-            }
-        });
-
-        /* Operations*/
-
-        AC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                display.setText("");
-            }
-        });
-
-        btnAd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder tmp = new StringBuilder();
-                tmp.append(eqView.getText().toString());
-                int ctr = tmp.length() - 1;
-                if (ctr >= 0 && (tmp.charAt(ctr) == '-' || tmp.charAt(ctr) == 'x' || tmp.charAt(ctr) == '/')) {
-                    eqView.setText(tmp.substring(0, ctr) + "+");
-                } else if (!Nums) {
-                    eqView.append("+");
-
-                    Nums = true;
-                }
-
-
-            }
-        });
-
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder tmp = new StringBuilder();
-                tmp.append(eqView.getText().toString());
-                int ctr = tmp.length() - 1;
-                if (tmp.charAt(ctr) == '+' || tmp.charAt(ctr) == 'x' || tmp.charAt(ctr) == '/') {
-                    eqView.setText(tmp.substring(0, ctr) + "-");
-                } else if (Nums) {
-                    eqView.append("-");
-
-                    Nums = false;
-                }
-
-
-            }
-        });
-
-        btnMult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder tmp = new StringBuilder();
-                tmp.append(eqView.getText().toString());
-                if (tmp.charAt(tmp.length() - 1) == '+' || tmp.charAt(tmp.length() - 1) == '-' || tmp.charAt(tmp.length() - 1) == '/') {
-                    eqView.setText(tmp.substring(0, (tmp.length() - 1)) + "x");
-                } else if (Nums) {
-                    eqView.append("x");
-
-                    Nums = false;
-                }
-
-
-            }
-        });
-
-        btnDiv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder tmp = new StringBuilder();
-                tmp.append(eqView.getText().toString());
-                if (tmp.charAt(tmp.length() - 1) == '+' || tmp.charAt(tmp.length() - 1) == '-' || tmp.charAt(tmp.length() - 1) == 'x') {
-                    eqView.setText(tmp.substring(0, (tmp.length() - 1)) + "/");
-                } else if (Nums) {
-                    eqView.append("/");
-
-                    Nums = false;
-                }
-
-
-            }
-        });
-
-
-        btnPoi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder tmp = new StringBuilder(eqView.getText().toString());
-                if (Nums && tmp.charAt(tmp.length() - 1) != '.') {
-                    eqView.append(".");
-                } else if (!Nums) {
-                    eqView.append("0.");
-                    Nums = true;
-                }
-
-            }
-        });
-
-
-        btnEq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String expression = eqView.getText().toString();
-                try {
-                    double result = c.ActualResult(expression);
-                    String formattedResult = c.formatResult(result);
-                    System.out.println(formattedResult);
-                    display.setText("");
-                    display.setText(formattedResult);
-
-                } catch (Exception e) {
-                    display.setText("Error");
-                }
+        Decbtn.setOnClickListener(v -> {
+            updateResult(false);
+            String expression = stringRev.getText().toString();
+            if (!expression.isEmpty() && expression.charAt(expression.length() - 1) == '.') {
+                stringRev.setText(expression.substring(0, expression.length() - 1));
+                isDecimal = false;
+            } else if (!isDecimal) {
+                stringRev.append(".");
+                isDecimal = true;
             }
         });
     }
+
+    private void updateResult(boolean performCalculation) {
+        TextView stringRes = findViewById(R.id.Result);
+        TextView stringRev = findViewById(R.id.Rev);
+        boolean pemdas = false;
+
+        if (performCalculation) {
+            pemdas = true;
+        }
+
+        try {
+            float result = calculator.calculate(stringRev.getText().toString(), pemdas);
+            stringRes.setText(formatResult(result));
+        } catch (Exception e) {
+            stringRes.setText(e.getMessage());
+        }
+    }
+
+
+
+
+
+
+    private boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
+    }
+
+    private String formatResult(float result) {
+        return result == (int) result ? String.valueOf((int) result) : String.valueOf(result);
+    }
 }
-
-
-
-
-
-

@@ -1,154 +1,81 @@
 package com.example.androidprojectcollection;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import java.text.DecimalFormat;
 import java.util.Stack;
 
-public class Calculator extends MainActivity3Calc {
-    
-        public double evaluateExpression (String expression){
 
-            String[] tokens = expression.split("(?=[+\\-x/])|(?<=[+\\-x/])");
+public class Calculator {
+    public float calculate(String expression, boolean pemdas) throws Exception {
+        if (expression.isEmpty()) throw new Exception("Invalid input");
 
-
-            double result = Double.parseDouble(tokens[0]);
-            char operator = ' ';
-
-
-            for (int i = 1; i < tokens.length; i++) {
-
-                if (tokens[i].matches("[+\\-x/]")) {
-                    operator = tokens[i].charAt(0);
-                } else {
-
-                    double operand = Double.parseDouble(tokens[i]);
-                    switch (operator) {
-                        case '+':
-                            result += operand;
-                            break;
-                        case '-':
-                            result -= operand;
-                            break;
-                        case 'x':
-                            result *= operand;
-                            break;
-                        case '/':
-
-                            if (operand == 0) {
-                                throw new ArithmeticException("Division by zero");
-                            }
-                            result /= operand;
-                            break;
-                    }
-                }
-            }
-            return result;
-        }
-
-        public String formatResult ( double result){
-            // Check if the result has decimal places
-            if (result == (long) result) {
-                // If the result is an integer, remove the decimal part
-                return String.format("%d", (long) result);
-            } else {
-
-                DecimalFormat decimalFormat = new DecimalFormat("#.##########");
-                return decimalFormat.format(result);
-            }
-        }
-
-
-
-        public void updateResult (MainActivity3Calc m) {
-            String expression = m.display.getText().toString();
-            if (expression.contains("+") || expression.contains("-") || expression.contains("x") || expression.contains("/")) {
-                try {
-                    double result = evaluateExpression(expression);
-                    String formattedResult = formatResult(result);
-                    m.eqView.setText(formattedResult);
-                } catch (Exception e) {
-                    m.eqView.setText("");
-                }
-            } else {
-                m.eqView.setText("");
-            }
-        }
-
-    public Double ActualResult (String expression){
-        expression = expression.replaceAll("\\s+", "");
-
-
-        String[] tokens = expression.split("(?<=[-+x/()])|(?=[-+x/()])");
-
-
-        Stack<Double> numbers = new Stack<>();
+        Stack<Float> operands = new Stack<>();
         Stack<Character> operators = new Stack<>();
 
-
-        for (String token : tokens) {
-
-            if (token.matches("[0-9]+")) {
-                numbers.push(Double.parseDouble(token));
-            } else if (token.equals("(")) {
-                operators.push(token.charAt(0));
-            } else if (token.equals(")")) {
-
-                while (!operators.isEmpty() && operators.peek() != '(') {
-                    evaluateOperator(numbers, operators);
+        for (int i = 0; i < expression.length(); i++) {
+            char current = expression.charAt(i);
+            if (Character.isDigit(current) || current == '.') {
+                StringBuilder sb = new StringBuilder();
+                while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
+                    sb.append(expression.charAt(i));
+                    i++;
                 }
-                operators.pop(); // Remove the '('
+                i--;
+                operands.push(Float.parseFloat(sb.toString()));
             } else {
-                while (!operators.isEmpty() && Precedence(token.charAt(0), operators.peek())) {
-                    evaluateOperator(numbers, operators);
+                while (!operators.isEmpty() && precedence(operators.peek(), pemdas) >= precedence(current, pemdas)) {
+                    evaluate(operands, operators);
                 }
-                operators.push(token.charAt(0));
+                operators.push(current);
             }
         }
 
         while (!operators.isEmpty()) {
-            evaluateOperator(numbers, operators);
+            evaluate(operands, operators);
         }
-        return numbers.pop();
 
+        if (operands.size() != 1) throw new Exception("Invalid expression format");
+        return operands.pop();
     }
 
-    public void evaluateOperator (Stack < Double > numbers, Stack < Character > operators){
+    private void evaluate(Stack<Float> operands, Stack<Character> operators) {
         char operator = operators.pop();
-        double num2 = numbers.pop();
-        double num1 = numbers.pop();
-        double result;
+        float value2 = operands.pop();
+        float value1 = operands.pop();
+        float result = 0;
         switch (operator) {
             case '+':
-                result = num1 + num2;
+                result = value1 + value2;
                 break;
             case '-':
-                result = num1 - num2;
+                result = value1 - value2;
                 break;
-            case 'x':
-                result = num1 * num2;
+            case '*':
+                result = value1 * value2;
                 break;
             case '/':
-                if (num2 == 0) {
-                    throw new ArithmeticException("Division by zero");
-                }
-                result = num1 / num2;
+                if (value2 == 0) throw new ArithmeticException("Division by zero");
+                result = value1 / value2;
                 break;
+            case '%':
+                result = value1 % value2;
+                break;
+        }
+        operands.push(result);
+    }
+
+    private int precedence(char symbol, boolean pemdas) {
+        if (!pemdas) return 1;
+        switch (symbol) {
+            case '^':
+                return 3;
+            case '*':
+            case '/':
+            case '%':
+                return 2;
+            case '+':
+            case '-':
+                return 1;
             default:
-                throw new IllegalArgumentException("Invalid operator");
+                return 0;
         }
-        numbers.push(result);
     }
-
-    public boolean Precedence(char op1, char op2) {
-        if (op2 == '(' || op2 == ')') {
-            return false;
-        }
-        return (op1 != 'x' && op1 != '/') || (op2 != '+' && op2 != '-');
-    }
-
-
-    }
-
+}

@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buTT1, buTTLay, buTTCalc;
+    Button buTT1, buTTLay, buTTCalc, buTTCon;
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        buTTCon = (Button) findViewById(R.id.btnconnect);
+        buTTCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(MainActivity.this, Connect3.class);
+                startActivity(intent1);
+            }
+        });
+
 
 
     }

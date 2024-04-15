@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button93"
+                android:id="@+id/btnAC"
                 android:layout_width="wrap_content"
                 android:layout_height="66dp"
                 android:backgroundTint="@color/light"
@@ -45,7 +45,7 @@
                 android:textColor="#878686" />
 
             <Button
-                android:id="@+id/button77"
+                android:id="@+id/btnDiv"
                 android:layout_width="wrap_content"
                 android:layout_height="66dp"
                 android:backgroundTint="@color/coral"
@@ -82,7 +82,7 @@
                 android:textColor="@color/gray" />
 
             <Button
-                android:id="@+id/button92"
+                android:id="@+id/btnMult"
                 android:layout_width="wrap_content"
                 android:layout_height="63dp"
                 android:backgroundTint="@color/coral"
@@ -118,7 +118,7 @@
                 android:textColor="@color/gray" />
 
             <Button
-                android:id="@+id/button80"
+                android:id="@+id/btnSub"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:backgroundTint="@color/coral"
@@ -154,7 +154,7 @@
                 android:textColor="@color/gray" />
 
             <Button
-                android:id="@+id/button83"
+                android:id="@+id/btnAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="62dp"
                 android:backgroundTint="@color/coral"
@@ -174,7 +174,7 @@
                 android:textColor="@color/gray" />
 
             <Button
-                android:id="@+id/button86"
+                android:id="@+id/btnDec"
                 android:layout_width="wrap_content"
                 android:layout_height="68dp"
                 android:backgroundTint="@color/white"
@@ -190,7 +190,7 @@
                 android:textColor="@color/gray" />
 
             <Button
-                android:id="@+id/button87"
+                android:id="@+id/btnEquals"
                 android:layout_width="wrap_content"
                 android:layout_height="68dp"
                 android:backgroundTint="@color/salmon"
@@ -199,7 +199,7 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/Result"
         android:layout_width="336dp"
         android:layout_height="84dp"
         android:textAlignment="textEnd"
@@ -212,7 +212,7 @@
         app:layout_constraintVertical_bias="0.934" />
 
     <TextView
-        android:id="@+id/equationview"
+        android:id="@+id/Rev"
         android:layout_width="337dp"
         android:layout_height="83dp"
         android:textAlignment="textEnd"
