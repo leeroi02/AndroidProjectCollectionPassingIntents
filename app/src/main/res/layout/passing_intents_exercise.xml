@@ -6,8 +6,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="379dp"
-        android:layout_height="552dp"
+        android:id="@+id/regForm"
+        android:layout_width="392dp"
+        android:layout_height="659dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,22 +33,22 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/tvFirst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Firstname" />
+                android:hint="Firstname"
+                android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/tvLast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Lastname" />
+                android:hint="Lastname"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
@@ -57,36 +58,37 @@
             android:layout_height="wrap_content"
             android:text="Gender" />
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/rgGender"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton7"
+                android:id="@+id/rMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Male" />
 
             <RadioButton
-                android:id="@+id/radioButton9"
+                android:id="@+id/rFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Female" />
 
             <RadioButton
-                android:id="@+id/radioButton8"
+                android:id="@+id/rOthers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Others" />
-        </LinearLayout>
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -97,7 +99,7 @@
                 android:text="Birthdate" />
 
             <EditText
-                android:id="@+id/editTextDate"
+                android:id="@+id/tvbday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,7 +110,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="33dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -119,7 +121,7 @@
                 android:text="Phone Number" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/tvphone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -130,7 +132,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="31dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -141,7 +143,7 @@
                 android:text="Email Address" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/tvemail"
                 android:layout_width="257dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -152,7 +154,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -160,15 +162,16 @@
                 android:layout_width="92dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Contact Number" />
+                android:text="Religion" />
 
             <EditText
-                android:id="@+id/editTextPhone"
+                android:id="@+id/tvReligion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="phone" />
+                android:inputType="textEmailAddress" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -184,8 +187,8 @@
                 android:text="Nationality" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName7"
-                android:layout_width="246dp"
+                android:id="@+id/tvNationality"
+                android:layout_width="253dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName" />
@@ -194,7 +197,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="127dp"
+            android:layout_height="190dp"
             android:orientation="vertical">
 
             <TextView
@@ -205,7 +208,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -216,7 +219,7 @@
                     android:text="Guardian Name" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName9"
+                    android:id="@+id/tvGuradian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -227,7 +230,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -238,7 +241,7 @@
                     android:text="Relationship" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName10"
+                    android:id="@+id/tvRel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -248,7 +251,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="33dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -259,7 +262,7 @@
                     android:text="Contact Number" />
 
                 <EditText
-                    android:id="@+id/editTextPhone2"
+                    android:id="@+id/tvGnum"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -275,7 +278,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

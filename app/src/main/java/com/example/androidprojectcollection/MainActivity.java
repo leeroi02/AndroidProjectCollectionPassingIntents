@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buTT1, buTTLay, buTTCalc, buTTCon;
+    Button buTT1, buTTLay, buTTCalc, buTTCon, buTTPass;
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buTTPass = (Button) findViewById(R.id.btnPassing);
+        buTTPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(MainActivity.this, PassingIntentsExercise.class);
+                startActivity(intent1);
+            }
+        });
 
 
     }

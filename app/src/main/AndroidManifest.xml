@@ -30,6 +30,16 @@
         </activity>
 
         <activity
+            android:name=".PassingIntentsExercise"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".PassingIntentsExercise2"
+            android:exported="false">
+        </activity>
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
